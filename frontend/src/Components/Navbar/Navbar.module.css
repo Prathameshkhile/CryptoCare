@@ -1,0 +1,131 @@
+@import "../../vars.css";
+
+
+.navbar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 36px;
+    z-index: 2;
+    margin: 0 4%;
+}
+
+img {
+    width: 55px;
+}
+
+.balance {
+    background: white;
+    border-radius: 50%;
+    padding: 3px;
+    padding-left: 4px;
+    padding-right: 6px;
+    position: relative;
+    left: -16px;
+
+}
+
+.title {
+    font-size: 40px;
+    font-weight: 600px;
+    text-decoration: none;
+    margin-top: -25px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: var(--color-text);
+    text-shadow: 0px 1px 20px #0b759d, 1px 1px 10px #8eced0;
+}
+
+.menu {
+    display: flex;
+}
+
+.menuItems {
+    display: flex;
+    gap: 47px;
+    list-style: none;
+}
+
+.menuItems a {
+    font-size: 22px;
+    color: var(--color-text);
+    text-decoration: none;
+}
+
+.menuItems a:hover {
+    transition-duration: 0.5s;
+    font-size: 29px;
+    color: var(--color-text);
+    text-shadow: 0px 7px 20px #3be2f5, 1px 1px 10px #8eced0;
+    text-decoration: none;
+}
+
+.menubtn {
+    display: none;
+}
+
+.acc {
+    margin-top: 0px;
+    border: 1px solid;
+    border-color: var(--color-btn);
+    padding: 10px;
+    color: var(--color-text);
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px 10px var(--color-secondary);
+}
+
+button {
+    background-color: var(--color-btn);
+    color: var(--color-text);
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 15px;
+    box-shadow: 0px 0px 0px 0px var(--color-secondary);
+}
+
+button:hover {
+    transition-duration: 0.3s;
+    font-size: 17px;
+    box-shadow: 0px 0px 10px 10px var(--color-secondary);
+}
+
+@media screen and (max-width: 830px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .menu {
+        position: absolute;
+        right: 0;
+        margin-right: 10%;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 11px;
+        z-index: 3;
+    }
+
+    .menubtn {
+        display: block;
+        cursor: pointer;
+    }
+
+    .menuItems {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        gap: 13px;
+        border-radius: 10px;
+        backdrop-filter: blur(5px);
+        background: rgb(25, 55, 109);
+        background: linear-gradient(0deg, rgba(25, 55, 109, 0.2)0%, rgba(25, 55, 109, 1)100%);
+        padding: 24px 33px;
+        box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
+    }
+
+    .menuOpen {
+        display: flex;
+        z-index: 1;
+    }
+}

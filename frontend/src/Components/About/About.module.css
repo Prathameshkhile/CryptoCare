@@ -1,0 +1,58 @@
+@import "../../vars.css";
+
+.About {
+    z-index: 1;
+    position: relative;
+    background-color: #a0a6de9e;
+    color: var(--color-text);
+    padding: 3rem 2rem;
+    text-align: center;
+    border-top: 4px solid var(--color-btn);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.heading {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    color: var(--color-btn);
+}
+
+.description {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.developerInfo {
+    font-size: 1rem;
+    font-style: italic;
+    margin-bottom: 1.5rem;
+}
+
+.links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.link {
+    background-color: var(--color-btn);
+    color: #1a1a2e;
+    padding: 0.5rem 1.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+
+.link:hover {
+    background-color: #008c9e;
+}
+
+a img {
+    width: 26px;
+}
