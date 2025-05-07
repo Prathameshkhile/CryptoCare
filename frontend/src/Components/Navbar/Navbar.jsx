@@ -8,7 +8,7 @@ export const Navbar = ({
   account,
   onNgoClick,
   onReqform,
-  onDashboard,
+  onDashboard, // This prop will now be the navigation function
   onBuyBread,
   isNGO,
   balance,
