@@ -52,7 +52,7 @@ export const ReqForm = ({ offReqform }) => {
             >
               <option value="child">Child</option>
               <option value="student">Student</option>
-              <option value="army">Army</option>
+              <option value="army">Environment</option>
               <option value="old">Old</option>
             </select>
           </label>
