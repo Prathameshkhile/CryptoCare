@@ -2,36 +2,14 @@ import React, { useState, useEffect } from "react";
 import styles from "./Dashboard.module.css";
 import { getContract } from "../../contract";
 
-export const Dashboard = () => {
+export const Dashboard = ({ address }) => {
   const [requests, setRequests] = useState([]);
-  const [address, setAddress] = useState(null); // State to store the user's address
 
   useEffect(() => {
-    const fetchAccountAndRequests = async () => {
-      // Get the user's address
-      let userAddress = null;
-      if (typeof window !== 'undefined' && typeof window.ethereum !== 'undefined') {
-        try {
-          const accounts = await window.ethereum.request({ method: 'eth_accounts' });
-          if (accounts && accounts.length > 0) {
-            userAddress = accounts[0];
-          }
-        } catch (error) {
-          console.error("Failed to get account:", error);
-          // Handle the error appropriately, e.g., show a message to the user
-        }
-      }
-
-      setAddress(userAddress); // Set the address state
-
-      // Fetch requests, passing the address
-      if (userAddress) {
-        fetchMyRequests(userAddress);
-      }
-    };
-
-    fetchAccountAndRequests();
-  }, []);
+    if (address) {
+      fetchMyRequests(address);
+    }
+  }, [address]);
 
   const fetchMyRequests = async (userAddress) => {
     try {

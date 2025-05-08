@@ -4,6 +4,7 @@ import { getContract } from "../../contract";
 
 export const Hero = () => {
   const [requests, setRequests] = useState([]);
+  const [NGOname, setNGOname] = useState("");
   const [expandedIndex, setExpandedIndex] = useState(null);
 
   useEffect(() => {
@@ -13,6 +14,12 @@ export const Hero = () => {
   const fetchRequests = async () => {
     const contract = await getContract();
     const allNGOs = await contract.getAllNGOs();
+
+    const ngoNameMap = {};
+    allNGOs.forEach((ngo) => {
+      ngoNameMap[ngo.ngoAddress] = ngo.name;
+    });
+
     const allRequests = [];
 
     for (const ngo of allNGOs) {
@@ -24,13 +31,14 @@ export const Hero = () => {
         allRequests.push({
           id: id.toString(),
           ngo: request[0],
+          ngoName: ngoNameMap[request[0]], // assign name here
           beneficiary: request[1],
           category: request[2],
           description: request[3],
           amountNeeded: request[4].toString(),
           amountReceived: request[5].toString(),
           fulfilled: request[6],
-          donationAmount: "", // initialize donation input state
+          donationAmount: "",
         });
       }
     }
@@ -82,6 +90,8 @@ export const Hero = () => {
               }`}
               onClick={() => toggleCard(i)}
             >
+              <p className={styles.ngoName}>{req.ngoName}</p>
+
               <img
                 src={getImagePath(req.beneficiary, req.category, req.fulfilled)}
                 alt={req.beneficiary}

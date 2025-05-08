@@ -3,7 +3,7 @@
 .container {
   position: relative;
   display: flex;
- 
+
   justify-content: space-between;
   margin: 100px auto;
   z-index: 1;
@@ -31,7 +31,7 @@ input {
   color: var(--color-text);
   text-align: center;
   border: 2px solid var(--color-text);
-  width: 100%;
+  width: 55%;
   max-width: 300px;
   margin: 0 auto;
 }
@@ -42,7 +42,8 @@ input::placeholder {
 
 .requestList {
   display: flex;
-  flex-wrap: wrap; /* Changed from nowrap to wrap */
+  flex-wrap: wrap;
+  /* Changed from nowrap to wrap */
   justify-content: center;
   gap: 1.5rem;
   margin-top: 2rem;
@@ -54,6 +55,7 @@ input::placeholder {
   max-width: 350px;
   min-height: auto;
   display: flex;
+  background: #ffffff63;
   flex-direction: column;
   border-radius: 1rem;
   padding: 1.5rem;
@@ -63,7 +65,8 @@ input::placeholder {
   overflow: hidden;
   position: relative;
   border: 1px solid rgba(0, 0, 0, 0.1);
-  margin-bottom: 2rem; /* Added margin-bottom to create space between rows */
+  margin-bottom: 2rem;
+  /* Added margin-bottom to create space between rows */
 }
 
 .card:hover {
@@ -158,9 +161,7 @@ input::placeholder {
     text-align: center;
   }
 
-  .heroContainer {
-    margin-bottom: 2rem;
-  }
+
 
   .requestCard {
     margin-bottom: 2rem;
@@ -187,15 +188,20 @@ input::placeholder {
   .requestList {
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: flex-start; /* Or any other alignment you prefer */
+    justify-content: flex-start;
+    /* Or any other alignment you prefer */
   }
 
   .requestCard {
-    margin-right: 2rem; /* Add some right margin between cards */
-    margin-bottom: 0; /* Remove bottom margin when side by side */
-    width: calc(33.33% - 2rem); /* Adjust width for 3 cards in a row with margin */
+    margin-right: 2rem;
+    /* Add some right margin between cards */
+    margin-bottom: 0;
+    /* Remove bottom margin when side by side */
+    width: calc(33.33% - 2rem);
+    /* Adjust width for 3 cards in a row with margin */
   }
-  .container{
+
+  .container {
     flex-direction: column;
   }
 }

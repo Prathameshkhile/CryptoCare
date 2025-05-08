@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom'; // Import routing components
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useNavigate,
+} from "react-router-dom"; // Import routing components
 import { getContract } from "./contract";
 import { parseEther, formatEther } from "ethers";
 import styles from "./App.module.css";
@@ -52,7 +57,7 @@ function App() {
           const contract = await getContract();
           const registered = await contract.isRegistered(account);
           const balance = await contract.breadBalances(account);
-          setBalance(formatEther(balance)); // Use formatEther to make it readable
+          setBalance(String(balance));
           setIsNGO(registered);
         } catch (error) {
           console.error("Error checking NGO status:", error);
@@ -76,7 +81,7 @@ function App() {
       if (isAlreadyRegistered) {
         alert("You are already listed as an NGO.");
       } else {
-        navigate('/ngo-form'); // Use navigate
+        navigate("/ngo-form"); // Use navigate
       }
     } catch (error) {
       console.error("Error checking NGO registration:", error);
@@ -85,53 +90,52 @@ function App() {
   };
 
   const closeForm = () => {
-    navigate('/'); // Go to home.  Consider where you want to go.
+    navigate("/"); // Go to home.  Consider where you want to go.
   };
 
   //Request raise form
   const onReqform = () => {
-    navigate('/req-form');
+    navigate("/req-form");
   };
   const offReqform = () => {
-    navigate('/'); // Go to home. Consider where you want to go.
+    navigate("/"); // Go to home. Consider where you want to go.
   };
 
   //Dasboard
   const onDashboard = () => {
-    navigate('/dashboard');
+    navigate("/dashboard");
   };
-
 
   //Buy Bread
   const onBuyBread = () => {
-    navigate('/buy-bread');
+    navigate("/buy-bread");
   };
   const offBuyBread = () => {
-      navigate('/'); // Go to home.
+    navigate("/"); // Go to home.
   };
 
   //List as Ngo to blockchain
-    const handleNgoSubmit = async (formData) => {
-        try {
-            const contract = await getContract();
+  const handleNgoSubmit = async (formData) => {
+    try {
+      const contract = await getContract();
 
-            const tx = await contract.listAsNGO(
-                formData.name,
-                formData.description,
-                formData.phone,
-                formData.location,
-                formData.website
-            );
+      const tx = await contract.listAsNGO(
+        formData.name,
+        formData.description,
+        formData.phone,
+        formData.location,
+        formData.website
+      );
 
-            await tx.wait(); // Wait for confirmation
+      await tx.wait(); // Wait for confirmation
 
-            alert("NGO listed successfully!");
-            navigate('/'); // Go to home
-        } catch (error) {
-            console.error("Error listing NGO:", error);
-            alert("Failed to list NGO. See console for details.");
-        }
-    };
+      alert("NGO listed successfully!");
+      navigate("/"); // Go to home
+    } catch (error) {
+      console.error("Error listing NGO:", error);
+      alert("Failed to list NGO. See console for details.");
+    }
+  };
 
   return (
     <div className={styles.App}>
@@ -146,11 +150,30 @@ function App() {
         balance={Balance}
       />
       <Routes>
-        <Route path="/" element={<><Hero /><About /></>} /> {/* Combine Hero and About on home */}
-        <Route path="/ngo-form" element={<NgoForm closeform={closeForm} onSubmit={handleNgoSubmit} />} />
-        <Route path="/buy-bread" element={<BuyBread offBuyBread={offBuyBread} />} />
+        <Route
+          path="/"
+          element={
+            <>
+              <Hero />
+              <About />
+            </>
+          }
+        />{" "}
+        {/* Combine Hero and About on home */}
+        <Route
+          path="/ngo-form"
+          element={<NgoForm closeform={closeForm} onSubmit={handleNgoSubmit} />}
+        />
+        <Route
+          path="/buy-bread"
+          element={<BuyBread offBuyBread={offBuyBread} />}
+        />
         <Route path="/req-form" element={<ReqForm offReqform={offReqform} />} />
-        <Route path="/dashboard" element={<Dashboard />} /> {/* Dashboard Route */}
+        <Route
+          path="/dashboard"
+          element={<Dashboard address={account} />}
+        />{" "}
+        {/* Dashboard Route */}
       </Routes>
     </div>
   );
