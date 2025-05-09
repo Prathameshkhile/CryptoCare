@@ -4,7 +4,6 @@ import { getContract } from "../../contract";
 
 export const Hero = () => {
   const [requests, setRequests] = useState([]);
-  const [NGOname, setNGOname] = useState("");
   const [expandedIndex, setExpandedIndex] = useState(null);
 
   useEffect(() => {

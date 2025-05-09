@@ -6,7 +6,6 @@ import {
   useNavigate,
 } from "react-router-dom"; // Import routing components
 import { getContract } from "./contract";
-import { parseEther, formatEther } from "ethers";
 import styles from "./App.module.css";
 import { Navbar } from "./Components/Navbar/Navbar";
 import { Hero } from "./Components/Hero/Hero";
@@ -18,7 +17,6 @@ import { Dashboard } from "./Components/Dashboard/Dashboard"; // Import the Dash
 
 function App() {
   const [account, setAccount] = useState("");
-  const [Ngoform, setNgoform] = useState(false);
   const [isNGO, setIsNGO] = useState(false);
   const [Balance, setBalance] = useState(0);
   const navigate = useNavigate(); // Use navigate for programmatic routing
@@ -26,15 +24,31 @@ function App() {
   // 📌 Check Wallet Connection
   useEffect(() => {
     const checkWalletConnection = async () => {
-      if (window.ethereum) {
+      try {
+        // Wait until MetaMask is injected (polling up to 2 seconds)
+        let tries = 0;
+        while (typeof window.ethereum === "undefined" && tries < 10) {
+          await new Promise((resolve) => setTimeout(resolve, 200));
+          tries++;
+        }
+
+        if (!window.ethereum) {
+          console.warn("MetaMask not detected after waiting.");
+          return;
+        }
+
         const accounts = await window.ethereum.request({
           method: "eth_accounts",
         });
+
         if (accounts.length > 0) {
           setAccount(accounts[0]);
         }
+      } catch (error) {
+        console.error("Error checking wallet connection:", error);
       }
     };
+
     checkWalletConnection();
   }, []);
 
