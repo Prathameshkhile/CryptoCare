@@ -8,6 +8,7 @@ import {
 import { getContract } from "./contract";
 import styles from "./App.module.css";
 import { Navbar } from "./Components/Navbar/Navbar";
+import { Anim } from "./Components/Anim/Anim";
 import { Hero } from "./Components/Hero/Hero";
 import { NgoForm } from "./Components/EnrollNgoForm/NgoForm";
 import { BuyBread } from "./Components/BuyBread/BuyBread";
@@ -19,36 +20,22 @@ function App() {
   const [account, setAccount] = useState("");
   const [isNGO, setIsNGO] = useState(false);
   const [Balance, setBalance] = useState(0);
+  const [anim, setAnim] = useState(false);
+  const [requests, setRequests] = useState([]);
   const navigate = useNavigate(); // Use navigate for programmatic routing
 
   // 📌 Check Wallet Connection
   useEffect(() => {
     const checkWalletConnection = async () => {
-      try {
-        // Wait until MetaMask is injected (polling up to 2 seconds)
-        let tries = 0;
-        while (typeof window.ethereum === "undefined" && tries < 10) {
-          await new Promise((resolve) => setTimeout(resolve, 200));
-          tries++;
-        }
-
-        if (!window.ethereum) {
-          console.warn("MetaMask not detected after waiting.");
-          return;
-        }
-
+      if (window.ethereum) {
         const accounts = await window.ethereum.request({
           method: "eth_accounts",
         });
-
         if (accounts.length > 0) {
           setAccount(accounts[0]);
         }
-      } catch (error) {
-        console.error("Error checking wallet connection:", error);
       }
     };
-
     checkWalletConnection();
   }, []);
 
@@ -63,7 +50,6 @@ function App() {
       alert("Please install MetaMask!");
     }
   };
-
   useEffect(() => {
     const checkIfNGO = async () => {
       if (account) {
@@ -76,10 +62,46 @@ function App() {
         } catch (error) {
           console.error("Error checking NGO status:", error);
         }
+        fetchRequests();
       }
     };
     checkIfNGO();
   }, [account]);
+
+  const fetchRequests = async () => {
+    const contract = await getContract();
+    const allNGOs = await contract.getAllNGOs();
+
+    const ngoNameMap = {};
+    allNGOs.forEach((ngo) => {
+      ngoNameMap[ngo.ngoAddress] = ngo.name;
+    });
+
+    const allRequests = [];
+
+    for (const ngo of allNGOs) {
+      const requestIds = await contract.getRequestsByNGO(ngo.ngoAddress);
+
+      for (const id of requestIds) {
+        const request = await contract.getRequestDetails(id);
+
+        allRequests.push({
+          id: id.toString(),
+          ngo: request[0],
+          ngoName: ngoNameMap[request[0]], // assign name here
+          beneficiary: request[1],
+          category: request[2],
+          description: request[3],
+          amountNeeded: request[4].toString(),
+          amountReceived: request[5].toString(),
+          fulfilled: request[6],
+          donationAmount: "",
+        });
+      }
+    }
+
+    setRequests(allRequests);
+  };
 
   //To Hide and unhide form
   const handleNgoClick = async () => {
@@ -127,6 +149,9 @@ function App() {
   const offBuyBread = () => {
     navigate("/"); // Go to home.
   };
+  const offAnim = () => {
+    setAnim(false);
+  };
 
   //List as Ngo to blockchain
   const handleNgoSubmit = async (formData) => {
@@ -145,6 +170,7 @@ function App() {
 
       alert("NGO listed successfully!");
       navigate("/"); // Go to home
+      window.location.reload();
     } catch (error) {
       console.error("Error listing NGO:", error);
       alert("Failed to list NGO. See console for details.");
@@ -163,12 +189,18 @@ function App() {
         onBuyBread={onBuyBread}
         balance={Balance}
       />
+      {anim && <Anim offAnim={offAnim} />}
       <Routes>
         <Route
           path="/"
           element={
             <>
-              <Hero />
+              <Hero
+                requests={requests}
+                fetchRequests={fetchRequests}
+                setRequests={setRequests}
+                setAnim={setAnim}
+              />
               <About />
             </>
           }

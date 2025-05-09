@@ -1,49 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styles from "./Hero.module.css";
 import { getContract } from "../../contract";
 
-export const Hero = () => {
-  const [requests, setRequests] = useState([]);
+export const Hero = ({ requests, fetchRequests, setRequests, setAnim }) => {
   const [expandedIndex, setExpandedIndex] = useState(null);
-
-  useEffect(() => {
-    fetchRequests();
-  }, []);
-
-  const fetchRequests = async () => {
-    const contract = await getContract();
-    const allNGOs = await contract.getAllNGOs();
-
-    const ngoNameMap = {};
-    allNGOs.forEach((ngo) => {
-      ngoNameMap[ngo.ngoAddress] = ngo.name;
-    });
-
-    const allRequests = [];
-
-    for (const ngo of allNGOs) {
-      const requestIds = await contract.getRequestsByNGO(ngo.ngoAddress);
-
-      for (const id of requestIds) {
-        const request = await contract.getRequestDetails(id);
-
-        allRequests.push({
-          id: id.toString(),
-          ngo: request[0],
-          ngoName: ngoNameMap[request[0]], // assign name here
-          beneficiary: request[1],
-          category: request[2],
-          description: request[3],
-          amountNeeded: request[4].toString(),
-          amountReceived: request[5].toString(),
-          fulfilled: request[6],
-          donationAmount: "",
-        });
-      }
-    }
-
-    setRequests(allRequests);
-  };
 
   const toggleCard = (index) => {
     setExpandedIndex(expandedIndex === index ? null : index);
@@ -69,6 +29,7 @@ export const Hero = () => {
       await tx.wait();
       alert("Donation successful!");
       fetchRequests();
+      setAnim(true);
     } catch (err) {
       alert("Donation failed: " + err.message);
     }
@@ -106,6 +67,7 @@ export const Hero = () => {
                 <div className={styles.extraInfo}>
                   <p>{req.description}</p>
                   <input
+                    className={styles.in}
                     type="number"
                     min="1"
                     placeholder="Enter amount to donate"
@@ -119,7 +81,6 @@ export const Hero = () => {
                         )
                       );
                     }}
-                    className={styles.inputField}
                   />
                   <button
                     className={styles.donateBtn}

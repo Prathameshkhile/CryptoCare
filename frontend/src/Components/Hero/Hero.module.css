@@ -24,7 +24,7 @@
     color: var(--color-text);
 }
 
-input {
+.in {
     padding: 8px;
     border-radius: 50px;
     background: transparent;
