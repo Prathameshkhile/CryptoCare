@@ -10,6 +10,7 @@ export const Navbar = ({
   onReqform,
   onDashboard, // This prop will now be the navigation function
   onBuyBread,
+  onWithdraw,
   isNGO,
   balance,
 }) => {
@@ -48,6 +49,11 @@ export const Navbar = ({
           <li>
             <a onClick={onBuyBread} style={{ cursor: "pointer" }}>
               Buy BREAD
+            </a>
+          </li>
+          <li>
+            <a onClick={onWithdraw} style={{ cursor: "pointer" }}>
+              Withdraw
             </a>
           </li>
           <li>

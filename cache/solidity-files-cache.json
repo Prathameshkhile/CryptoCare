@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "E:\\Codes\\CryptoCare\\contracts\\MyContract.sol": {
-      "lastModificationDate": 1746787257681,
-      "contentHash": "d636a14809b2abc7462e222c8bf38ed0",
+      "lastModificationDate": 1750619378592,
+      "contentHash": "5e8abfccc608794a033650eda8c148d9",
       "sourceName": "contracts/MyContract.sol",
       "solcConfig": {
         "version": "0.8.20",

@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import { getContract } from "../../contract";
-import { parseEther } from "ethers";
-import styles from "./BuyBread.module.css";
+import styles from "./Withdraw.module.css";
 
-export const BuyBread = ({ offBuyBread }) => {
+export const Withdraw = ({ offWithdraw }) => {
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(false);
 
   const BREAD_PRICE_ETH = "0.00054";
 
-  const handleBuyBread = async () => {
+  const handleWithdraw = async () => {
     if (!window.ethereum) {
       alert("Please install MetaMask.");
       return;
@@ -17,20 +16,18 @@ export const BuyBread = ({ offBuyBread }) => {
 
     try {
       const contract = await getContract();
-      const pricePerBread = parseEther(BREAD_PRICE_ETH); // returns BigInt
-      const totalCost = pricePerBread * BigInt(quantity); // ✅ works with BigInt
 
       setLoading(true);
-      const tx = await contract.buyBread(quantity, { value: totalCost });
+      const tx = await contract.withdraw(quantity);
       await tx.wait();
 
       alert(`Successfully bought ${quantity} bread(s)!`);
       setLoading(false);
-      offBuyBread();
+      offWithdraw();
       window.location.reload();
     } catch (err) {
       console.error(err);
-      alert("Transaction failed.");
+      alert(err);
       setLoading(false);
     }
   };
@@ -39,13 +36,13 @@ export const BuyBread = ({ offBuyBread }) => {
     <div className={styles.container}>
       <div className={styles.box}>
         <p
-          onClick={offBuyBread}
+          onClick={offWithdraw}
           style={{ cursor: "pointer" }}
           className={styles.close}
         >
           x
         </p>
-        <h2 className={styles.title}>Buy Bread</h2>
+        <h2 className={styles.title}>Withdraw Eth</h2>
         <input
           type="number"
           min="1"
@@ -54,13 +51,13 @@ export const BuyBread = ({ offBuyBread }) => {
           className={styles.input}
         />
         <button
-          onClick={handleBuyBread}
+          onClick={handleWithdraw}
           className={styles.button}
           disabled={loading}
         >
           {loading
             ? "Processing..."
-            : `Buy for ${(Number(BREAD_PRICE_ETH) * quantity).toFixed(6)} ETH`}
+            : `Withdraw ${(Number(BREAD_PRICE_ETH) * quantity).toFixed(6)} ETH`}
         </button>
       </div>
     </div>

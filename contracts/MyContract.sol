@@ -67,6 +67,11 @@ contract NGORegistry {
     mapping(address => uint256) public breadBalances;
 
     event BreadBought(address indexed buyer, uint256 amount, uint256 totalPaid);
+    event BreadWithdrawn(
+        address indexed withdrawer,
+        uint256 amount,
+        uint256 quantity
+    );
 
     modifier onlyOwner() {
         require(msg.sender == owner, "Not the contract owner.");
@@ -92,6 +97,24 @@ contract NGORegistry {
         if (msg.value > totalCost) {
             payable(msg.sender).transfer(msg.value - totalCost);
         }
+    }
+
+    //finction to withdraw eth
+    function withdraw(uint256 quantity) external {
+        require(quantity > 0, "Quantity must be greater than 0.");
+        uint256 totalCost = BREAD_PRICE_WEI * quantity;
+        require(
+            breadBalances[msg.sender] >= quantity,
+            "Insufficient Bread owned."
+        );
+
+        //Transfer Eth
+        breadBalances[msg.sender] -= quantity;
+        payable(msg.sender).transfer(totalCost);
+
+        emit BreadWithdrawn(msg.sender, totalCost, quantity);
+
+        // Refund extra Ether sent
     }
 
     //Raise Request

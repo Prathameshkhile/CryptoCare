@@ -1,6 +1,6 @@
 import { BrowserProvider, Contract } from "ethers";
 
-const contractAddress = "0x3eB2738a3ee4a2BbdB93e05013516546Ab56D197"; // Replace with your contract address
+const contractAddress = "0xCC36A6E66d6F6EffBB8bCF54C64E36Fd5848322e"; // Replace with your contract address
 const contractABI = [
   {
     inputs: [],
@@ -30,6 +30,31 @@ const contractABI = [
       },
     ],
     name: "BreadBought",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "withdrawer",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "quantity",
+        type: "uint256",
+      },
+    ],
+    name: "BreadWithdrawn",
     type: "event",
   },
   {
@@ -623,6 +648,19 @@ const contractABI = [
       },
     ],
     stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "quantity",
+        type: "uint256",
+      },
+    ],
+    name: "withdraw",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
 ];

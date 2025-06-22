@@ -12,6 +12,7 @@ import { Anim } from "./Components/Anim/Anim";
 import { Hero } from "./Components/Hero/Hero";
 import { NgoForm } from "./Components/EnrollNgoForm/NgoForm";
 import { BuyBread } from "./Components/BuyBread/BuyBread";
+import { Withdraw } from "./Components/Withdraw/Withdraw";
 import { ReqForm } from "./Components/RequestForm/ReqForm";
 import { About } from "./Components/About/About";
 import { Dashboard } from "./Components/Dashboard/Dashboard"; // Import the Dashboard component
@@ -146,7 +147,13 @@ function App() {
   const onBuyBread = () => {
     navigate("/buy-bread");
   };
+  const onWithdraw = () => {
+    navigate("/withdraw");
+  };
   const offBuyBread = () => {
+    navigate("/"); // Go to home.
+  };
+  const offWithdraw = () => {
     navigate("/"); // Go to home.
   };
   const offAnim = () => {
@@ -187,6 +194,7 @@ function App() {
         onReqform={onReqform}
         onDashboard={onDashboard}
         onBuyBread={onBuyBread}
+        onWithdraw={onWithdraw}
         balance={Balance}
       />
       {anim && <Anim offAnim={offAnim} />}
@@ -206,6 +214,10 @@ function App() {
           }
         />{" "}
         {/* Combine Hero and About on home */}
+        <Route
+          path="/withdraw"
+          element={<Withdraw offWithdraw={offWithdraw} />}
+        />
         <Route
           path="/ngo-form"
           element={<NgoForm closeform={closeForm} onSubmit={handleNgoSubmit} />}
