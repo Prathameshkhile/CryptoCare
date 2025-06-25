@@ -40,7 +40,7 @@ export const Hero = ({ requests, fetchRequests, setRequests, setAnim }) => {
   return (
     <section className={styles.container} id="hero">
       <div className={styles.heroContainer}>
-        <h1 className={styles.title}>Requests For Help</h1>
+     
         <div className={styles.cardGrid}>
           {visibleRequests.map((req, i) => (
             <div
@@ -91,10 +91,14 @@ export const Hero = ({ requests, fetchRequests, setRequests, setAnim }) => {
                   >
                     Donate BREAD
                   </button>
+                  
                 </div>
+                
               )}
+              
             </div>
           ))}
+          <h1 className={styles.title}>'GIVING IS NOT JUST ABOUT MAKING A DONATION, IT IS ABOUT MAKING A DIFFERENCE.'</h1>
         </div>
       </div>
       <div className={styles.topBlur} />

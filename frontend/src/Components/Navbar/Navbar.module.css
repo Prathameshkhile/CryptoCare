@@ -6,9 +6,11 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-top: 36px;
+    padding-top: 12px;
+    
     z-index: 2;
-    margin: 0 4%;
+    background-color: #C0C9EE;
+    border-bottom: 4px solid var(--color-btn);
 }
 
 img {
@@ -33,7 +35,8 @@ img {
     margin-top: -25px;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     color: var(--color-text);
-    text-shadow: 0px 1px 20px #0b759d, 1px 1px 10px #8eced0;
+    text-shadow: 0px 1px 20px #FFF2E0, 1px 1px 10px #FFF2E0;
+    margin-left: 10px;
 }
 
 .menu {
@@ -56,7 +59,7 @@ img {
     transition-duration: 0.5s;
     font-size: 29px;
     color: var(--color-text);
-    text-shadow: 0px 7px 20px #3be2f5, 1px 1px 10px #8eced0;
+    text-shadow: 0px 7px 20px #FFF2E0, 1px 1px 10px #FFF2E0;
     text-decoration: none;
 }
 

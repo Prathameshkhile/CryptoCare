@@ -8,8 +8,8 @@ module.exports = {
       url: process.env.SEPOLIA_RPC_URL,
       accounts: [process.env.PRIVATE_KEY],
     },
-    // hardhat: {
-    //   chainId: 31337,
-    // },
+    /*hardhat: {
+     chainId: 31337,
+    },*/
   },
 };
