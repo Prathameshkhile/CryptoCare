@@ -18,6 +18,7 @@ import { About } from "./Components/About/About";
 import { Dashboard } from "./Components/Dashboard/Dashboard"; // Import the Dashboard component
 
 function App() {
+  const [loading, setLoading] = useState(false);
   const [account, setAccount] = useState("");
   const [isNGO, setIsNGO] = useState(false);
   const [Balance, setBalance] = useState(0);
@@ -71,8 +72,9 @@ function App() {
 
   const fetchRequests = async () => {
     const contract = await getContract();
+    setLoading(true);
     const allNGOs = await contract.getAllNGOs();
-
+    setLoading(false);
     const ngoNameMap = {};
     allNGOs.forEach((ngo) => {
       ngoNameMap[ngo.ngoAddress] = ngo.name;
@@ -158,6 +160,7 @@ function App() {
   };
   const offAnim = () => {
     setAnim(false);
+    window.location.reload();
   };
 
   //List as Ngo to blockchain
@@ -186,6 +189,13 @@ function App() {
 
   return (
     <div className={styles.App}>
+      {loading && (
+        <div className={styles.loadcont}>
+          <div className={styles.load}>
+            <img src="/cutting.gif" alt="bread" />
+          </div>
+        </div>
+      )}
       <Navbar
         connectWallet={connectWallet}
         account={account}

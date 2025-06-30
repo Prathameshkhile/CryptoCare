@@ -4,6 +4,7 @@ import { getContract } from "../../contract";
 
 export const Hero = ({ requests, fetchRequests, setRequests, setAnim }) => {
   const [expandedIndex, setExpandedIndex] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const toggleCard = (index) => {
     setExpandedIndex(expandedIndex === index ? null : index);
@@ -25,8 +26,10 @@ export const Hero = ({ requests, fetchRequests, setRequests, setAnim }) => {
     }
 
     try {
+      setLoading(true);
       const tx = await contract.donateBread(parseInt(id), amount);
       await tx.wait();
+      setLoading(false);
       alert("Donation successful!");
       fetchRequests();
       setAnim(true);
@@ -40,7 +43,6 @@ export const Hero = ({ requests, fetchRequests, setRequests, setAnim }) => {
   return (
     <section className={styles.container} id="hero">
       <div className={styles.heroContainer}>
-     
         <div className={styles.cardGrid}>
           {visibleRequests.map((req, i) => (
             <div
@@ -91,18 +93,25 @@ export const Hero = ({ requests, fetchRequests, setRequests, setAnim }) => {
                   >
                     Donate BREAD
                   </button>
-                  
                 </div>
-                
               )}
-              
             </div>
           ))}
-          <h1 className={styles.title}>'GIVING IS NOT JUST ABOUT MAKING A DONATION, IT IS ABOUT MAKING A DIFFERENCE.'</h1>
+          <h1 className={styles.title}>
+            'GIVING IS NOT JUST ABOUT MAKING A DONATION, IT IS ABOUT MAKING A
+            DIFFERENCE.'
+          </h1>
         </div>
       </div>
       <div className={styles.topBlur} />
       <div className={styles.bottomBlur} />
+      {loading && (
+        <div className={styles.loadcont}>
+          <div className={styles.load}>
+            <img src="/cutting.gif" alt="bread" />
+          </div>
+        </div>
+      )}
     </section>
   );
 };

@@ -37,32 +37,41 @@ export const BuyBread = ({ offBuyBread }) => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.box}>
-        <p
-          onClick={offBuyBread}
-          style={{ cursor: "pointer" }}
-          className={styles.close}
-        >
-          x
-        </p>
-        <h2 className={styles.title}>Buy Bread</h2>
-        <input
-          type="number"
-          min="1"
-          value={quantity}
-          onChange={(e) => setQuantity(Number(e.target.value))}
-          className={styles.input}
-        />
-        <button
-          onClick={handleBuyBread}
-          className={styles.button}
-          disabled={loading}
-        >
-          {loading
-            ? "Processing..."
-            : `Buy for ${(Number(BREAD_PRICE_ETH) * quantity).toFixed(6)} ETH`}
-        </button>
-      </div>
+      {!loading && (
+        <div className={styles.box}>
+          <p
+            onClick={offBuyBread}
+            style={{ cursor: "pointer" }}
+            className={styles.close}
+          >
+            x
+          </p>
+          <h2 className={styles.title}>Buy Bread</h2>
+          <input
+            type="number"
+            min="1"
+            value={quantity}
+            onChange={(e) => setQuantity(Number(e.target.value))}
+            className={styles.input}
+          />
+          <button
+            onClick={handleBuyBread}
+            className={styles.button}
+            disabled={loading}
+          >
+            {loading
+              ? "Processing..."
+              : `Buy for ${(Number(BREAD_PRICE_ETH) * quantity).toFixed(
+                  6
+                )} ETH`}
+          </button>
+        </div>
+      )}
+      {loading && (
+        <div className={styles.load}>
+          <img src="/cutting.gif" alt="bread" />
+        </div>
+      )}
     </div>
   );
 };
