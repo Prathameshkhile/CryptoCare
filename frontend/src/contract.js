@@ -1,6 +1,6 @@
 import { BrowserProvider, Contract } from "ethers";
 
-const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3"; // Replace with your contract address
+const contractAddress = "0x8C14C07ad1A1d201F0f16B23dC0B02aE373DB1f3"; // Replace with your contract address
 const contractABI = [
   {
     inputs: [],
